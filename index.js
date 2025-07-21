@@ -1,5 +1,7 @@
 const profileRoute = require("./routes/v1/profile");
 const profilesRoute = require("./routes/v1/profiles");
+const profilesRouteV2 = require("./routes/v2/profiles");
+
 const NotFound = require("./middleware/notfound");
 const Auth = require("./middleware/auth");
 const ErrorHandler = require("./middleware/errorhandler");
@@ -34,6 +36,7 @@ app.use(limiter);
 
 app.get("/v1/profile/:uuid/:profileid", Auth, profileRoute);
 app.get("/v1/profiles/:uuid", Auth, profilesRoute);
+app.get("/v2/profiles/:uuid", Auth, profilesRouteV2);
 
 app.use(NotFound);
 app.use(ErrorHandler);
