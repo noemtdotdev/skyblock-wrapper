@@ -1,0 +1,36 @@
+{
+  "name": "qwackapi",
+  "version": "1.0.0",
+  "description": "API for the features of the SkyHelper Discord bot and more",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "prettier:fix": "npx prettier --write ."
+  },
+  "keywords": [
+    "api",
+    "hypixel",
+    "skyblock"
+  ],
+  "author": "DuckySoLucky, Altpapier, MattTheCuber",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.22.0",
+    "chalk": "^4.1.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^6.11.2",
+    "flatted": "^3.3.1",
+    "lilyweight": "^2.7.2",
+    "moment": "^2.30.1",
+    "nodemon": "^2.0.22",
+    "prismarine-nbt": "^2.5.0",
+    "redis": "^4.7.0",
+    "skyhelper-networth": "^2.4.1",
+    "util": "^0.12.5"
+  },
+  "engines": {
+    "node": "=16.7.0"
+  }
+}
