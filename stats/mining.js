@@ -1,3 +1,42 @@
+/**
+ * Predicts the HOTM level based on given powders.
+ * @param {number} mithrilPowder - Amount of mithril powder
+ * @param {number} gemstonePowder - Amount of gemstone powder
+ * @param {number} glacitePowder - Amount of glacite powder
+ * @returns {number} Predicted HOTM level
+ */
+function predictHotmLevel(mithrilPowder, gemstonePowder, glacitePowder) {
+  if (mithrilPowder >= 12500000 && gemstonePowder >= 20000000 && glacitePowder >= 20000000) {
+    return 10;
+  }
+  
+  let baseLevel = 1;
+
+  if (gemstonePowder !== 0) {
+    baseLevel = 4;
+  }
+  
+  if (glacitePowder !== 0) {
+    baseLevel = 7;
+  }
+  
+  let scaledLevel = baseLevel;
+  
+  if (mithrilPowder > 0) {
+    scaledLevel += Math.min(2, Math.floor(mithrilPowder / 2000000));
+  }
+  
+  if (gemstonePowder > 0) {
+    scaledLevel += Math.min(2, Math.floor(gemstonePowder / 5000000));
+  }
+  
+  if (glacitePowder > 0) {
+    scaledLevel += Math.min(3, Math.floor(glacitePowder / 5000000));
+  }
+  
+  return Math.min(10, scaledLevel);
+}
+
 const { getHotM, perks, forgeItemTimes } = require("../constants/mining");
 const { toFixed, titleCase } = require("../constants/functions");
 const getSkills = require("./skills");
@@ -89,9 +128,11 @@ module.exports = (player, profile) => {
         current: mining_stats?.tokens || 0,
         total: mining_stats?.tokens || 0 + mining_stats?.tokens_spent || 0,
       },
-      level: mining_stats?.experience
-        ? Number(toFixed(getHotM(mining_stats?.experience)))
-        : 0,
+      level: predictHotmLevel(
+        mining_stats?.powder_mithril_total || 0 + mining_stats?.powder_spent_mithril || 0,
+        mining_stats?.powder_gemstone_total || 0 + mining_stats?.powder_spent_gemstone || 0,
+        mining_stats?.powder_glacite_total || 0 + mining_stats?.powder_spent_glacite || 0
+      ),
       experience: mining_stats?.experience || 0,
       perks: player_perks,
       disabled_perks: disabled_perks,
